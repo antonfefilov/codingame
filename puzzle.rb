@@ -1,29 +1,44 @@
 STDOUT.sync = true # DO NOT REMOVE
-# The while loop represents the game.
-# Each iteration represents a turn of the game
-# where you are given inputs (the heights of the mountains)
-# and where you have to print an output (the index of the mountain to fire on)
-# The inputs you are given are automatically updated according to your last actions.
+# Auto-generated code below aims at helping you parse
+# the standard input according to the problem statement.
+# ---
+# Hint: You can use the debug stream to print initialTX and initialTY, if Thor seems not follow your orders.
 
+# light_x: the X position of the light of power
+# light_y: the Y position of the light of power
+# initial_tx: Thor's starting X position
+# initial_ty: Thor's starting Y position
+@light_x, @light_y, @initial_tx, @initial_ty = gets.split(" ").collect {|x| x.to_i}
+@current_position_x = @initial_tx
+@current_position_y = @initial_ty
 
 # game loop
 loop do
-  mountains = []
+    remaining_turns = gets.to_i # The remaining amount of turns Thor can move. Do not remove this line.
 
-  8.times do
-    mountain_h = gets.to_i # represents the height of one mountain.
+    direction = ""
+    # Write an action using puts
+    # To debug: STDERR.puts "Debug messages..."
+    if @current_position_y < @light_y && (@current_position_y < 18)
+      direction << "S"
+      @current_position_y += 1
+    end
 
-    mountains << mountain_h
-  end
+    if @current_position_y > @light_y && (@current_position_y >= 0)
+      direction << "N"
+      @current_position_y -= 1
+    end
 
-  highest_mountain = { value: 0 }
+    if @current_position_x < @light_x && (@current_position_y < 40)
+      direction << "E"
+      @current_position_x += 1
+    end
 
-  mountains.each_with_index do |el, index|
-    highest_mountain = { index: index, value: el } if highest_mountain[:value] < el
-  end
+    if @current_position_x > @light_x && (@current_position_y >= 0)
+      direction << "W"
+      @current_position_x -= 1
+    end
 
-  puts highest_mountain[:index] # The index of the mountain to fire on.
+    # A single line providing the move to be made: N NE E SE S SW W or NW
+    puts direction
 end
-
-  # Write an action using puts
-  # STDERR.puts mountains
